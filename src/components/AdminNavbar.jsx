@@ -29,37 +29,40 @@ const AdminNavbar = () => {
 
   return (
     <nav className="bg-primary/95 backdrop-blur-md sticky top-0 z-50 border-b border-white/10">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between h-16 items-center">
-          {/* Left - Logo/Brand */}
-          <Link
-            to="/admin/dashboard"
-            className="flex items-center gap-3 group focus:outline-none focus:ring-2 focus:ring-white/20 rounded-lg p-1 -m-1"
-            aria-label="Go to Dashboard"
-          >
-            <div className="p-2 bg-white/10 rounded-lg group-hover:bg-white/15 transition-colors duration-200">
-              <svg
-                className="w-6 h-6 text-accent"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-                aria-hidden="true"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"
-                />
-              </svg>
-            </div>
-            <span className="text-lg font-bold text-white tracking-tight">
-              BuildEstates
-            </span>
-          </Link>
+      <div className="w-full px-4 sm:px-6 lg:px-8">
+        <div className="flex h-16 items-center justify-between">
+
+          {/* Left - Logo/Brand (Extreme Left) */}
+          <div className="flex-shrink-0">
+            <Link
+              to="/admin/dashboard"
+              className="flex items-center gap-3 group focus:outline-none focus:ring-2 focus:ring-white/20 rounded-lg p-1 -m-1"
+              aria-label="Go to Dashboard"
+            >
+              <div className="p-2 bg-white/10 rounded-lg group-hover:bg-white/15 transition-colors duration-200">
+                <svg
+                  className="w-6 h-6 text-accent"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                  aria-hidden="true"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"
+                  />
+                </svg>
+              </div>
+              <span className="text-lg font-bold text-white tracking-tight">
+                BuildEstates
+              </span>
+            </Link>
+          </div>
 
           {/* Center - Navigation Links (Desktop) */}
-          <div className="hidden md:flex items-center gap-1">
+          <div className="hidden md:flex items-center gap-1 absolute left-1/2 transform -translate-x-1/2">
             {navLinks.map((link) => (
               <Link
                 key={link.path}
@@ -75,8 +78,8 @@ const AdminNavbar = () => {
             ))}
           </div>
 
-          {/* Right - View Site, User Info, Logout */}
-          <div className="flex items-center gap-3">
+          {/* Right - View Site, User Info, Logout (Extreme Right) */}
+          <div className="flex-shrink-0 flex items-center gap-3">
             {/* View Site Link */}
             <Link
               to="/"

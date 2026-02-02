@@ -41,8 +41,8 @@ const PublicNavbar = () => {
                 />
               </svg>
             </div>
-            <span className="text-lg font-semibold text-white tracking-tight hidden sm:block">
-              Properties & Construction
+            <span className="text-lg font-bold text-white tracking-tight">
+              BuildEstates
             </span>
           </Link>
 

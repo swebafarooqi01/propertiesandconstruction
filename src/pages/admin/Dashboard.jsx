@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { PieChart, Pie, Cell, ResponsiveContainer, Legend, Tooltip } from 'recharts';
 import AdminNavbar from '../../components/AdminNavbar';
@@ -9,6 +10,32 @@ const CHART_COLORS = ['#B45309', '#F59E0B', '#FBBF24', '#FDE68A'];
 
 const Dashboard = () => {
   const { properties, constructions, houses } = useData();
+  const [modalOpen, setModalOpen] = useState(false);
+  const [selectedCategory, setSelectedCategory] = useState(null);
+
+  // Get items for selected category
+  const getItemsForCategory = (category) => {
+    switch (category) {
+      case 'Properties':
+        return { items: properties, type: 'property' };
+      case 'Construction':
+        return { items: constructions, type: 'construction' };
+      case 'Houses for Sale':
+        return { items: houses, type: 'house' };
+      default:
+        return { items: [], type: '' };
+    }
+  };
+
+  const handleCardClick = (categoryTitle) => {
+    setSelectedCategory(categoryTitle);
+    setModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setModalOpen(false);
+    setSelectedCategory(null);
+  };
 
   // Separate data for each feature
   const getChartData = (items) => [
@@ -146,14 +173,14 @@ const Dashboard = () => {
       'flex items-center justify-center gap-1.5 px-3 py-2 rounded-lg text-sm font-medium transition-all duration-200 cursor-pointer focus:outline-none focus:ring-2 focus:ring-offset-1';
     switch (variant) {
       case 'primary':
-        // Dark blue
-        return `${base} bg-blue-800 text-white hover:bg-blue-900 focus:ring-blue-800/50`;
+        // Dark navy #14213D
+        return `${base} bg-[#14213D] text-white hover:bg-[#0d1628] focus:ring-[#14213D]/50`;
       case 'secondary':
-        // Lighter blue
-        return `${base} bg-blue-500 text-white hover:bg-blue-600 focus:ring-blue-500/50`;
+        // Lighter navy
+        return `${base} bg-[#2a3f5f] text-white hover:bg-[#1d2d4f] focus:ring-[#2a3f5f]/50`;
       case 'danger':
-        // Light blue
-        return `${base} bg-blue-100 text-blue-800 hover:bg-blue-200 focus:ring-blue-300/50`;
+        // White/gray
+        return `${base} bg-gray-100 text-gray-700 hover:bg-gray-200 focus:ring-gray-300/50`;
       default:
         return base;
     }
@@ -260,48 +287,32 @@ const Dashboard = () => {
         {/* Center Content */}
         <div className="flex-1 min-w-0">
           {/* Hero Section */}
-          <div className="relative overflow-hidden bg-primary mx-4 lg:mx-8 mt-4 rounded-2xl">
-            <div className="absolute inset-0">
-              <div className="absolute top-0 right-0 w-96 h-96 bg-accent/20 rounded-full blur-3xl transform translate-x-1/2 -translate-y-1/2" />
-              <div className="absolute bottom-0 left-0 w-64 h-64 bg-white/10 rounded-full blur-2xl transform -translate-x-1/2 translate-y-1/2" />
-            </div>
-            <div className="relative px-6 py-8">
-              <h1 className="text-2xl md:text-3xl font-bold text-white tracking-tight">
-                Dashboard
-              </h1>
-              <p className="mt-1 text-white/70 text-base">
-                Manage your properties, construction projects, and house listings
-              </p>
-            </div>
+          <div className="bg-primary mx-4 lg:mx-8 mt-4 rounded-2xl px-6 py-8">
+            <h1 className="text-2xl md:text-3xl font-bold text-white tracking-tight">
+              Dashboard
+            </h1>
+            <p className="mt-1 text-white/70 text-base">
+              Manage your properties, construction projects, and house listings
+            </p>
           </div>
 
           <main className="px-4 lg:px-8 py-6">
             <div>
             {/* Stats Cards */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-10">
               {stats.map((stat, index) => (
                 <div
                   key={index}
-                  className="relative bg-white/80 backdrop-blur-sm rounded-2xl p-6 shadow-sm border border-gray-200/60 hover:shadow-md hover:border-gray-300/60 transition-all duration-200"
+                  className="bg-[#F5EFE6] rounded-xl px-4 py-3 hover:shadow-md transition-all duration-200"
                 >
-                  <div className="flex items-start justify-between">
-                    <div>
-                      <p className="text-sm font-medium text-gray-500 tracking-wide uppercase">
-                        {stat.label}
-                      </p>
-                      <p className="mt-3 text-4xl font-bold text-gray-900">{stat.value}</p>
-                      {stat.trend > 0 && (
-                        <p className="mt-2 flex items-center gap-1.5 text-sm">
-                          <span className="inline-flex items-center justify-center w-5 h-5 rounded-full bg-accent/20">
-                            <span className="w-1.5 h-1.5 rounded-full bg-accent" />
-                          </span>
-                          <span className="text-gray-600">
-                            {stat.trend} {stat.trendLabel}
-                          </span>
-                        </p>
-                      )}
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-2">
+                      <span className="text-2xl font-bold text-[#14213D]">{stat.value}</span>
+                      <span className="text-sm text-gray-600">{stat.label}</span>
                     </div>
-                    <div className="p-3 rounded-xl bg-primary/5 text-primary">{stat.icon}</div>
+                    <div className="p-2 rounded-lg bg-[#14213D] text-[#FCA311]">
+                      {stat.icon}
+                    </div>
                   </div>
                 </div>
               ))}
@@ -320,7 +331,8 @@ const Dashboard = () => {
                 {chartCategories.map((category) => (
                   <div
                     key={category.title}
-                    className="bg-white rounded-2xl shadow-sm border border-gray-200/60 p-6 hover:shadow-md transition-all duration-200"
+                    onClick={() => handleCardClick(category.title)}
+                    className="bg-white rounded-2xl shadow-sm border border-gray-200/60 p-6 hover:shadow-lg hover:border-primary/30 transition-all duration-200 cursor-pointer"
                   >
                     <div className="flex items-center justify-between mb-4">
                       <h3 className="text-lg font-semibold text-gray-900">{category.title}</h3>
@@ -330,54 +342,58 @@ const Dashboard = () => {
                     </div>
 
                     {category.total > 0 ? (
-                      <>
-                        <ResponsiveContainer width="100%" height={200}>
-                          <PieChart>
-                            <Pie
-                              data={category.data.filter((d) => d.value > 0)}
-                              cx="50%"
-                              cy="50%"
-                              innerRadius={50}
-                              outerRadius={80}
-                              paddingAngle={2}
-                              dataKey="value"
-                            >
-                              {category.data.map((entry, index) => (
-                                <Cell key={`cell-${index}`} fill={CHART_COLORS[index]} />
-                              ))}
-                            </Pie>
-                            <Tooltip
-                              formatter={(value, name) => [`${value} items`, name]}
-                              contentStyle={{
-                                backgroundColor: 'white',
-                                border: '1px solid #e5e7eb',
-                                borderRadius: '8px',
-                                boxShadow: '0 4px 6px -1px rgb(0 0 0 / 0.1)',
-                              }}
-                            />
-                          </PieChart>
-                        </ResponsiveContainer>
-                        <div className="grid grid-cols-2 gap-2 mt-4">
+                      <div className="flex items-center">
+                        {/* Chart */}
+                        <div className="w-1/2">
+                          <ResponsiveContainer width="100%" height={220}>
+                            <PieChart>
+                              <Pie
+                                data={category.data.filter((d) => d.value > 0)}
+                                cx="50%"
+                                cy="50%"
+                                innerRadius={55}
+                                outerRadius={90}
+                                paddingAngle={2}
+                                dataKey="value"
+                              >
+                                {category.data.map((entry, index) => (
+                                  <Cell key={`cell-${index}`} fill={CHART_COLORS[index]} />
+                                ))}
+                              </Pie>
+                              <Tooltip
+                                formatter={(value, name) => [`${value} items`, name]}
+                                contentStyle={{
+                                  backgroundColor: 'white',
+                                  border: '1px solid #e5e7eb',
+                                  borderRadius: '8px',
+                                  boxShadow: '0 4px 6px -1px rgb(0 0 0 / 0.1)',
+                                }}
+                              />
+                            </PieChart>
+                          </ResponsiveContainer>
+                        </div>
+                        {/* Legend */}
+                        <div className="w-1/2 space-y-4 pl-4">
                           <div className="flex items-center gap-2 text-sm">
                             <span className="w-3 h-3 rounded-full" style={{ backgroundColor: '#B45309' }}></span>
-                            <span className="text-gray-600">Hot: {category.data[0].value}</span>
+                            <span className="text-gray-600">Hot</span>
                           </div>
                           <div className="flex items-center gap-2 text-sm">
                             <span className="w-3 h-3 rounded-full" style={{ backgroundColor: '#F59E0B' }}></span>
-                            <span className="text-gray-600">Available: {category.data[1].value}</span>
+                            <span className="text-gray-600">Available</span>
                           </div>
                           <div className="flex items-center gap-2 text-sm">
                             <span className="w-3 h-3 rounded-full" style={{ backgroundColor: '#FBBF24' }}></span>
-                            <span className="text-gray-600">Sold: {category.data[2].value}</span>
+                            <span className="text-gray-600">Sold</span>
                           </div>
                           <div className="flex items-center gap-2 text-sm">
                             <span className="w-3 h-3 rounded-full" style={{ backgroundColor: '#FDE68A' }}></span>
-                            <span className="text-gray-600">Regular: {category.data[3].value}</span>
+                            <span className="text-gray-600">Regular</span>
                           </div>
                         </div>
-                      </>
+                      </div>
                     ) : (
-                      <div className="h-[200px] flex items-center justify-center text-gray-400">
+                      <div className="h-[220px] flex items-center justify-center text-gray-400">
                         No data available
                       </div>
                     )}
@@ -509,6 +525,122 @@ const Dashboard = () => {
           </div>
         </div>
       </div>
+
+      {/* Modal Popup */}
+      {modalOpen && selectedCategory && (
+        <div className="fixed inset-0 z-50 overflow-y-auto">
+          {/* Backdrop */}
+          <div
+            className="fixed inset-0 bg-black/50 transition-opacity"
+            onClick={closeModal}
+          />
+
+          {/* Modal */}
+          <div className="flex min-h-full items-center justify-center p-4">
+            <div className="relative bg-white rounded-2xl shadow-xl max-w-2xl w-full max-h-[80vh] overflow-hidden">
+              {/* Header */}
+              <div className="flex items-center justify-between p-6 border-b border-gray-200">
+                <div>
+                  <h2 className="text-xl font-semibold text-gray-900">{selectedCategory}</h2>
+                  <p className="text-sm text-gray-500 mt-1">
+                    {getItemsForCategory(selectedCategory).items.length} items
+                  </p>
+                </div>
+                <button
+                  onClick={closeModal}
+                  className="p-2 rounded-lg hover:bg-gray-100 transition-colors"
+                >
+                  <svg className="w-5 h-5 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                  </svg>
+                </button>
+              </div>
+
+              {/* Content */}
+              <div className="p-6 overflow-y-auto max-h-[60vh]">
+                {getItemsForCategory(selectedCategory).items.length === 0 ? (
+                  <div className="text-center py-8">
+                    <p className="text-gray-500">No items found</p>
+                  </div>
+                ) : (
+                  <div>
+                    {/* Table Header */}
+                    <div className="flex items-center gap-3 py-2 px-2 border-b border-gray-200 bg-gray-50 rounded-t-lg">
+                      <div className="w-12 flex-shrink-0"></div>
+                      <p className="text-xs font-semibold text-gray-500 uppercase tracking-wide flex-1">Name</p>
+                      <p className="text-xs font-semibold text-gray-500 uppercase tracking-wide flex-shrink-0 w-24 text-center">Status</p>
+                      <p className="text-xs font-semibold text-gray-500 uppercase tracking-wide flex-shrink-0 w-28 text-right">Price</p>
+                    </div>
+                    {/* Table Body */}
+                    <div className="divide-y divide-gray-100">
+                    {getItemsForCategory(selectedCategory).items.map((item) => (
+                      <div
+                        key={item.id}
+                        className="flex items-center gap-3 py-3 hover:bg-gray-50 px-2 rounded transition-colors"
+                      >
+                        {/* Image */}
+                        <div className="w-12 h-12 rounded-lg overflow-hidden bg-gray-100 flex-shrink-0">
+                          {item.photos && item.photos.length > 0 ? (
+                            <img
+                              src={item.photos[0]}
+                              alt={item.name}
+                              className="w-full h-full object-cover"
+                            />
+                          ) : (
+                            <div className="w-full h-full flex items-center justify-center text-gray-400">
+                              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                              </svg>
+                            </div>
+                          )}
+                        </div>
+
+                        {/* Name */}
+                        <p className="font-medium text-gray-900 truncate flex-1">{item.name}</p>
+
+                        {/* Status */}
+                        <div className="flex items-center justify-center gap-1 flex-shrink-0 w-24">
+                          {item.hot && (
+                            <span className="px-2 py-0.5 text-xs font-medium bg-amber-100 text-amber-700 rounded">
+                              Hot
+                            </span>
+                          )}
+                          {item.sold ? (
+                            <span className="px-2 py-0.5 text-xs font-medium bg-red-100 text-red-700 rounded">
+                              Sold
+                            </span>
+                          ) : (
+                            <span className="px-2 py-0.5 text-xs font-medium bg-green-100 text-green-700 rounded">
+                              Available
+                            </span>
+                          )}
+                        </div>
+
+                        {/* Price */}
+                        <p className="font-semibold text-gray-900 flex-shrink-0 w-28 text-right">
+                          ${item.rate || item.price}
+                        </p>
+                      </div>
+                    ))}
+                    </div>
+                  </div>
+                )}
+              </div>
+
+              {/* Footer */}
+              <div className="flex items-center justify-end p-4 border-t border-gray-200 bg-gray-50">
+                <Link
+                  to={`/admin/listings?filter=all`}
+                  className="px-4 py-2 text-sm font-medium text-white bg-[#14213D] rounded-lg hover:bg-[#0d1628] transition-colors"
+                  onClick={closeModal}
+                >
+                  View All Listings
+                </Link>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
