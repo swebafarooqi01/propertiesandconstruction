@@ -41,7 +41,7 @@ const ConstructionDetail = () => {
             <div>
               <div className="relative rounded-xl overflow-hidden">
                 <img
-                  src={construction.photos?.[0] || 'https://picsum.photos/800/600'}
+                  src={construction.photos?.[0] || 'https://images.unsplash.com/photo-1541888946425-d81bb19240f5?w=800&h=600&fit=crop'}
                   alt={construction.name}
                   className="w-full h-80 object-cover"
                 />

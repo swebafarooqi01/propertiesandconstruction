@@ -37,7 +37,7 @@ const Houses = () => {
               >
                 <div className="relative h-48 overflow-hidden">
                   <img
-                    src={house.photos?.[0] || 'https://picsum.photos/400/300'}
+                    src={house.photos?.[0] || 'https://images.unsplash.com/photo-1568605114967-8130f3a36994?w=400&h=300&fit=crop'}
                     alt={house.name}
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                   />

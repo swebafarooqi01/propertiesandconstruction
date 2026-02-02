@@ -41,7 +41,7 @@ const PropertyDetail = () => {
             <div>
               <div className="relative rounded-xl overflow-hidden">
                 <img
-                  src={property.photos?.[0] || 'https://picsum.photos/800/600'}
+                  src={property.photos?.[0] || 'https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=800&h=600&fit=crop'}
                   alt={property.name}
                   className="w-full h-80 object-cover"
                 />

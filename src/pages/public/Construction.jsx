@@ -37,7 +37,7 @@ const Construction = () => {
               >
                 <div className="relative h-48 overflow-hidden">
                   <img
-                    src={construction.photos?.[0] || 'https://picsum.photos/400/300'}
+                    src={construction.photos?.[0] || 'https://images.unsplash.com/photo-1541888946425-d81bb19240f5?w=400&h=300&fit=crop'}
                     alt={construction.name}
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                   />
