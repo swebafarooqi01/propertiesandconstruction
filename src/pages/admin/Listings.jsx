@@ -5,6 +5,7 @@ import { useData } from '../../context/DataContext';
 const Listings = () => {
   const [searchParams] = useSearchParams();
   const filter = searchParams.get('filter') || 'all';
+  const type = searchParams.get('type') || null;
   const { properties, constructions, houses } = useData();
 
   // Combine all items with their type
@@ -14,39 +15,72 @@ const Listings = () => {
     ...houses.map((item) => ({ ...item, type: 'house', typeName: 'House' })),
   ];
 
-  // Filter items based on the filter parameter
+  // Filter items based on type first, then status
   const getFilteredItems = () => {
+    let items = allItems;
+
+    // Filter by type if specified
+    if (type) {
+      items = items.filter((item) => item.type === type);
+    }
+
+    // Then filter by status
     switch (filter) {
       case 'sold':
-        return allItems.filter((item) => item.sold);
+        return items.filter((item) => item.sold);
       case 'hot':
-        return allItems.filter((item) => item.hot);
+        return items.filter((item) => item.hot);
       case 'available':
-        return allItems.filter((item) => !item.sold);
+        return items.filter((item) => !item.sold);
       case 'all':
       default:
-        return allItems;
+        return items;
     }
   };
 
   const filteredItems = getFilteredItems();
 
+  // Get type info for display
+  const getTypeInfo = () => {
+    switch (type) {
+      case 'property':
+        return { title: 'Properties', description: 'Manage all property listings' };
+      case 'construction':
+        return { title: 'Construction', description: 'Manage construction projects' };
+      case 'house':
+        return { title: 'Houses for Sale', description: 'Manage house listings' };
+      default:
+        return null;
+    }
+  };
+
   // Get filter info for display
   const getFilterInfo = () => {
+    const typeInfo = getTypeInfo();
+    const baseTitle = typeInfo ? typeInfo.title : 'Listings';
+
     switch (filter) {
       case 'sold':
-        return { title: 'Sold Listings', description: 'All properties that have been sold', color: 'text-primary', bg: 'bg-primary/10' };
+        return { title: `Sold ${baseTitle}`, description: typeInfo?.description || 'All items that have been sold', color: 'text-primary', bg: 'bg-primary/10' };
       case 'hot':
-        return { title: 'Hot Listings', description: 'Featured and trending properties', color: 'text-accent-dark', bg: 'bg-accent/10' };
+        return { title: `Hot ${baseTitle}`, description: typeInfo?.description || 'Featured and trending items', color: 'text-accent-dark', bg: 'bg-accent/10' };
       case 'available':
-        return { title: 'Available Listings', description: 'Properties currently on the market', color: 'text-green-600', bg: 'bg-green-100' };
+        return { title: `Available ${baseTitle}`, description: typeInfo?.description || 'Items currently on the market', color: 'text-green-600', bg: 'bg-green-100' };
       case 'all':
       default:
-        return { title: 'All Listings', description: 'Complete inventory overview', color: 'text-gray-700', bg: 'bg-gray-100' };
+        return { title: typeInfo ? typeInfo.title : 'All Listings', description: typeInfo?.description || 'Complete inventory overview', color: 'text-gray-700', bg: 'bg-gray-100' };
     }
   };
 
   const filterInfo = getFilterInfo();
+
+  // Build filter URL preserving type parameter
+  const buildFilterUrl = (filterKey) => {
+    const params = new URLSearchParams();
+    if (type) params.set('type', type);
+    params.set('filter', filterKey);
+    return `/admin/listings?${params.toString()}`;
+  };
 
   // Get the detail page URL based on type
   const getDetailUrl = (item) => {
@@ -103,8 +137,8 @@ const Listings = () => {
             </span>
           </div>
 
-          {/* Filter Tabs */}
-          <div className="flex gap-2 mt-6">
+          {/* Status Filter Tabs */}
+          <div className="flex gap-2 mt-4">
             {[
               { key: 'all', label: 'All' },
               { key: 'available', label: 'Available' },
@@ -113,7 +147,7 @@ const Listings = () => {
             ].map((tab) => (
               <Link
                 key={tab.key}
-                to={`/admin/listings?filter=${tab.key}`}
+                to={buildFilterUrl(tab.key)}
                 className={`px-4 py-2 rounded-lg text-sm font-medium transition-all ${
                   filter === tab.key
                     ? 'bg-primary text-white'

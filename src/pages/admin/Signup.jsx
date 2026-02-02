@@ -51,7 +51,7 @@ const Signup = () => {
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
               </svg>
             </div>
-            <span className="text-xl font-semibold text-gray-900">Properties Admin</span>
+            <span className="text-xl font-semibold text-gray-900">BuildEstates</span>
           </div>
 
           <div className="text-center lg:text-left mb-8">
@@ -241,21 +241,21 @@ const Signup = () => {
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
               </svg>
             </div>
-            <span className="text-xl font-semibold text-white">Properties Admin</span>
+            <span className="text-xl font-semibold text-white">BuildEstates</span>
           </Link>
 
           <div className="space-y-6">
             <h1 className="text-4xl lg:text-5xl font-bold text-white leading-tight">
-              Start managing<br />your <span className="text-accent">properties</span><br />today
+              Build your<br /><span className="text-accent">real estate</span><br />empire
             </h1>
             <p className="text-white/70 text-lg max-w-md leading-relaxed">
-              Set up your admin account in seconds and get full control over your real estate portfolio.
+              Get started with BuildEstates and manage properties, construction projects, and houses all from one powerful dashboard.
             </p>
             <div className="space-y-4 pt-4">
               {[
                 { step: '1', text: 'Create your admin account' },
-                { step: '2', text: 'Add your first listing' },
-                { step: '3', text: 'Manage your portfolio' },
+                { step: '2', text: 'Add properties, construction & houses' },
+                { step: '3', text: 'Track sales & analytics' },
               ].map((item, index) => (
                 <div key={index} className="flex items-center gap-4">
                   <div className="w-8 h-8 rounded-full bg-accent/20 flex items-center justify-center">
@@ -267,7 +267,7 @@ const Signup = () => {
             </div>
           </div>
 
-          <p className="text-white/40 text-sm">© {new Date().getFullYear()} Properties Admin. All rights reserved.</p>
+          <p className="text-white/40 text-sm">© {new Date().getFullYear()} BuildEstates. All rights reserved.</p>
         </div>
       </div>
     </div>

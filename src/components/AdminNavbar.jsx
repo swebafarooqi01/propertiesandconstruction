@@ -15,9 +15,9 @@ const AdminNavbar = () => {
 
   const navLinks = [
     { name: 'Dashboard', path: '/admin/dashboard' },
-    { name: 'Properties', path: '/admin/listings?tab=properties' },
-    { name: 'Construction', path: '/admin/listings?tab=construction' },
-    { name: 'Houses', path: '/admin/listings?tab=houses' },
+    { name: 'Properties', path: '/admin/listings?type=property' },
+    { name: 'Construction', path: '/admin/listings?type=construction' },
+    { name: 'Houses', path: '/admin/listings?type=house' },
   ];
 
   const isActive = (path) => {

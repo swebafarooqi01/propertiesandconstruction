@@ -4,9 +4,9 @@ import { PieChart, Pie, Cell, ResponsiveContainer, Legend, Tooltip } from 'recha
 import AdminNavbar from '../../components/AdminNavbar';
 import { useData } from '../../context/DataContext';
 
-// Yellow/Gold theme for charts
-// Hot (Dark Amber), Available (Amber), Sold (Yellow), Regular (Pale Yellow)
-const CHART_COLORS = ['#B45309', '#F59E0B', '#FBBF24', '#FDE68A'];
+// Gold theme for charts
+// Hot (Dark Gold), Available (Gold), Sold (Lighter Gold), Regular (Lightest Gold)
+const CHART_COLORS = ['#D4900A', '#FCA311', '#FDBA4A', '#FED683'];
 
 const Dashboard = () => {
   const { properties, constructions, houses } = useData();
@@ -375,19 +375,19 @@ const Dashboard = () => {
                         {/* Legend */}
                         <div className="w-1/2 space-y-4 pl-4">
                           <div className="flex items-center gap-2 text-sm">
-                            <span className="w-3 h-3 rounded-full" style={{ backgroundColor: '#B45309' }}></span>
+                            <span className="w-3 h-3 rounded-full" style={{ backgroundColor: '#D4900A' }}></span>
                             <span className="text-gray-600">Hot</span>
                           </div>
                           <div className="flex items-center gap-2 text-sm">
-                            <span className="w-3 h-3 rounded-full" style={{ backgroundColor: '#F59E0B' }}></span>
+                            <span className="w-3 h-3 rounded-full" style={{ backgroundColor: '#FCA311' }}></span>
                             <span className="text-gray-600">Available</span>
                           </div>
                           <div className="flex items-center gap-2 text-sm">
-                            <span className="w-3 h-3 rounded-full" style={{ backgroundColor: '#FBBF24' }}></span>
+                            <span className="w-3 h-3 rounded-full" style={{ backgroundColor: '#FDBA4A' }}></span>
                             <span className="text-gray-600">Sold</span>
                           </div>
                           <div className="flex items-center gap-2 text-sm">
-                            <span className="w-3 h-3 rounded-full" style={{ backgroundColor: '#FDE68A' }}></span>
+                            <span className="w-3 h-3 rounded-full" style={{ backgroundColor: '#FED683' }}></span>
                             <span className="text-gray-600">Regular</span>
                           </div>
                         </div>

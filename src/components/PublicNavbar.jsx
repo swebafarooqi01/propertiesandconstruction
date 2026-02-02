@@ -19,12 +19,12 @@ const PublicNavbar = () => {
 
   return (
     <nav className="bg-primary/95 backdrop-blur-md sticky top-0 z-50 border-b border-white/10">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between h-16 items-center">
-          {/* Logo */}
+      <div className="w-full px-4 sm:px-6 lg:px-8">
+        <div className="flex justify-between h-16 items-center relative">
+          {/* Logo - Extreme Left */}
           <Link
             to="/"
-            className="flex items-center gap-3 group focus:outline-none focus:ring-2 focus:ring-white/20 rounded-lg p-1 -m-1"
+            className="flex items-center gap-3 group focus:outline-none focus:ring-2 focus:ring-white/20 rounded-lg p-1 -m-1 flex-shrink-0"
           >
             <div className="p-2 bg-white/10 rounded-lg group-hover:bg-white/15 transition-colors duration-200">
               <svg
@@ -46,8 +46,8 @@ const PublicNavbar = () => {
             </span>
           </Link>
 
-          {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center gap-1">
+          {/* Desktop Navigation - Center */}
+          <div className="hidden md:flex items-center gap-1 absolute left-1/2 transform -translate-x-1/2">
             {navLinks.map((link) => (
               <Link
                 key={link.path}
@@ -61,9 +61,13 @@ const PublicNavbar = () => {
                 {link.label}
               </Link>
             ))}
+          </div>
+
+          {/* Admin Button - Extreme Right */}
+          <div className="hidden md:flex items-center flex-shrink-0">
             <Link
               to="/admin/login"
-              className="ml-4 px-4 py-2 rounded-lg text-sm font-medium bg-accent hover:bg-accent-light text-white transition-colors duration-200"
+              className="px-4 py-2 rounded-lg text-sm font-medium bg-accent hover:bg-accent-light text-white transition-colors duration-200"
             >
               Admin
             </Link>
