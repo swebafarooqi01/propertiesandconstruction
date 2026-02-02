@@ -29,6 +29,7 @@ import DeleteConstruction from './pages/admin/construction/DeleteConstruction';
 import CreateHouse from './pages/admin/houses/CreateHouse';
 import UpdateHouse from './pages/admin/houses/UpdateHouse';
 import DeleteHouse from './pages/admin/houses/DeleteHouse';
+import Listings from './pages/admin/Listings';
 
 // Public Layout wrapper
 const PublicLayout = ({ children }) => (
@@ -64,6 +65,14 @@ function App() {
               element={
                 <ProtectedRoute>
                   <Dashboard />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/admin/listings"
+              element={
+                <ProtectedRoute>
+                  <Listings />
                 </ProtectedRoute>
               }
             />

@@ -49,7 +49,7 @@ const HouseDetail = () => {
                   <span className="absolute top-4 left-4 px-4 py-2 bg-accent text-white text-sm font-medium rounded-full">Hot House</span>
                 )}
                 {house.sold && (
-                  <span className="absolute top-4 right-4 px-4 py-2 bg-red-500 text-white text-sm font-medium rounded-full">Sold</span>
+                  <span className="absolute top-4 right-4 px-4 py-2 bg-gray-800 text-white text-sm font-medium rounded-full">Sold</span>
                 )}
               </div>
               {house.photos?.length > 1 && (
@@ -68,9 +68,9 @@ const HouseDetail = () => {
               <div className="flex gap-3 mt-4">
                 {house.hot && <span className="px-3 py-1 bg-accent/10 text-accent-dark text-sm font-medium rounded-full">Featured</span>}
                 {house.sold ? (
-                  <span className="px-3 py-1 bg-red-100 text-red-700 text-sm font-medium rounded-full">Sold</span>
+                  <span className="px-3 py-1 bg-gray-100 text-gray-700 text-sm font-medium rounded-full">Sold</span>
                 ) : (
-                  <span className="px-3 py-1 bg-green-100 text-green-700 text-sm font-medium rounded-full">Available</span>
+                  <span className="px-3 py-1 bg-primary/10 text-primary text-sm font-medium rounded-full">Available</span>
                 )}
               </div>
 

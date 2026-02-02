@@ -36,7 +36,7 @@ const Home = () => {
           </span>
         )}
         {item.sold && (
-          <span className="absolute top-3 right-3 px-3 py-1 bg-red-500 text-white text-xs font-medium rounded-full">
+          <span className="absolute top-3 right-3 px-3 py-1 bg-gray-800 text-white text-xs font-medium rounded-full">
             Sold
           </span>
         )}
